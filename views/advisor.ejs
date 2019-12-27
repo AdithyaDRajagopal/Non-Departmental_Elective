@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script
+  src="http://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="javascript" type="text/javascript" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+  <script>
+   function openCity(evt, cityName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+      
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+      
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+      
+        // Show the current tab, and add an "active" class to the link that opened the tab
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+      }</script>
+</head>
+
+<body>
+    <style>
+        * {box-sizing: border-box}
+
+/* Style the tab */
+.tab {
+  float: left;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  width: 30%;
+  height: 100vh;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  display: block;
+  background-color: inherit;
+  color: black;
+  padding: 22px 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  float: left;
+  padding: 0px 12px;
+  border: 1px solid #ccc;
+  width: 70%;
+  border-left: none;
+  height: 100vh;
+}
+        </style>
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'addStudent')">Add Student</button>
+   <button class="tablinks" onclick="openCity(event, 'changePasswordStudent')">Change Password- Student</button>
+</div>
+<div>
+  <button style="float:right" ><a href='/logout'>Logout</a></button>
+</div>
+
+<div id="addStudent" class="tabcontent">
+  <h3>Add Student</h3>
+  <br>
+  <form method="POST" action="/advisor/addStudent">
+    
+     <div class="group">
+        <label>Registration ID</label>
+      <input type="text" name="username"><span class="highlight"></span><span class="bar"></span>
+    </div>
+    
+    <div class="group">
+        <label>Name</label>
+      <input type="text" name="name"><span class="highlight"></span><span class="bar"></span>
+    </div>
+  
+        <label>Password</label>
+      <input type="password" name="password" style="width:40%;"><span class="highlight"></span><span class="bar"></span>
+    
+      <label>CGPA</label>
+    <input type="number" step="0.01" name="cgpa"  style="width:20%;"><span class="highlight"></span><span class="bar"></span>
+<br>
+<br>
+   <h6>Select if any of the following electives were opted by the student in semesters 5-8</h6>
+   <%for(var i=0;i<elective.length;i++) {%>
+    <tr>
+      <td style="color:white;">
+        <input type="checkbox" name="elective" value="<%= elective[i].Cid %>" /><%=elective[i].Cid %>
+      </td>
+    </tr>
+    <%}%>
+<br>
+<br>
+    <button type="submit" type="button" class="button buttonBlue">Add Student
+      <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
+    </button>
+  </form>
+</div>
+
+
+<div id="changePasswordStudent" class="tabcontent">
+    <h3>Change Password - Student</h3>
+    <form method="POST" action = "/advisor/changePassword">
+        <div class="group">
+            Username<input type="text" name="userID">
+        </div>
+        <div class="group">
+              New Password<input type="password" name="password">
+        </div> 
+        <div class="group">
+            Confirm Password<input type="password" name="conf_password">
+      </div> 
+      <button type="submit" type="button" class="button buttonBlue">Submit
+     
+        </button>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+ </head>
+  <body>
+    <div>
+        <table>
+            <tr>
+                <th>Reg ID</th>
+                <th>Name</th>
+                <th>CourseID</th>
+                <th>Course Name</th>
+            </tr>
+            <% for(var i=0; i < data.length; i++) { %>
+                
+                <tr>
+                    <td><%= data[i][0] %></td>
+                    <td><%= data[i][1] %></td>
+                    <td><%= data[i][2] %></td>
+                    <td><%= data[i][3] %></td>
+                </tr>
+
+            <% } %> 
+        </table>
+    </div>
+  </body>
+</html>
