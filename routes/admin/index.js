@@ -80,7 +80,10 @@ router.get("/allot",(req,res)=>{
 })
 
 router.post("/result",(req,res) =>{
-  res.render('result')
+  methods.result.getResults()
+  .then(re => {
+    res.render('result',{title : 'Result',result: re})
+  })  
 })
 
 router.get("/back",(req,res) => {

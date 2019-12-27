@@ -11,6 +11,7 @@ const Op = Sequelize.Op;
 var allotmentMethods = {}
 
 allotmentMethods.allot = function() {
+    return new Promise((resolve,reject) => {
         models.result.destroy({
             where : {},
             truncate : true
@@ -74,6 +75,7 @@ allotmentMethods.allot = function() {
                 console.log(er)
             })
         })
+    })    
 }
 
 
