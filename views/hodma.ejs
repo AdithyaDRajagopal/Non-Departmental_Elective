@@ -32,7 +32,6 @@
         document.getElementById(cityName).style.display = "block";
         evt.currentTarget.className += " active";
       }
-  
       </script>
 </head>
 
@@ -84,78 +83,56 @@
 }
         </style>
 <div class="tab">
-  <button class="tablinks" onclick="openCity(event, 'allotment')">Allotment</button>
-  <button class="tablinks" onclick="openCity(event, 'addHOD')">Add HOD</button>
-  <button class="tablinks" onclick="openCity(event, 'changePasswordHOD')">Change Password - HOD</button>
-  <button class="tablinks" onclick="openCity(event, 'viewCourse')">View Courses</button>
+  <button class="tablinks" onclick="openCity(event, 'selCourse')">Select Courses</button>
+  <button class="tablinks" onclick="openCity(event, 'delCourse')">Delete Courses</button>
 </div>
 <div>
   <button style="float:right" ><a href='/logout'>Logout</a></button>
 </div>
-<div id="addHOD" class="tabcontent">
-  <h3>Add HOD</h3>
-  <form method="POST" action="/admin/addHOD">
-    <div class="group">
-      Name<input type="text" name="name">
-    </div>
-    <div class="group">
-      Department<br>
-      <select name="deptID">
-          <% for(var i=0;i<data.length;i++) { %>
-        <option value=<%= data[i].Did %>><%= data[i].Dname %> </option>
-        <% } %>
-      </select>
-    </div>
-    <div class="group">
-      Username<input type="text" name="username">
-    </div>
-    <div class="group">
-      Password<input type="password" name="password">
-    </div>
-    <button type="submit"  class="button buttonBlue">Add HOD
-     
-    </button>
+
+<div id="selCourse" class="tabcontent">
+  <h3>Select Courses</h3>
+  <form method="POST" action = "/HOD/selCourse">
+      <div class="group">
+          Courses that can be offered<br>
+          <select name="courseID">
+              <% for(var i=0;i<course.length;i++) { %>
+            <option value=<%=course[i].courseID%>><%=course[i].courseID %> - <%= course[i].name %> </option>
+            <% } %>
+          </select>
+        </div>
+        <div class="group">
+            Capacity<input type="number" name="capacity">
+          </div> 
+          <button type="submit" type="button" class="button buttonBlue">Select Course
+          </button>
   </form>
 </div>
 
-<div id="allotment" class="tabcontent">
-  <h3>Allotment</h3> 
-    <br><br>
-    <button type="button" class="button buttonBlue" ><a href="/admin/allot">Perform Allotment</a>
-     </button>
-     <br><br>
-     <button type="button" class="button buttonBlue" ><a href="/admin/result">View Results</a>
-     </button>
-    </div>
 
-<div id="changePasswordHOD" class="tabcontent">
-    <h3>Change Password - HOD</h3>
-    <form method="POST" action = "/admin/changePassword">
-        <div class="group">
-            Username<input type="text" name="userID">
-        </div>
-        <div class="group">
-              New Password<input type="password" name="password">
-        </div> 
-        <div class="group">
-            Confirm Password<input type="password" name="conf_password">
-      </div> 
-      <button type="submit" type="button" class="button buttonBlue">Submit
-     
-        </button>
-    </form>
-</div>
+<div id="delCourse" class="tabcontent">
+    <h3>Delete Courses</h3>
+    <table>
+      <tr>
+        <th>Course Code</th>
+        <th>Course Name</th>
+        <!-- <th>Edit </th> -->
+        <th>Delete</th>
+      </tr>
+      <% for(var i=0;i<selcourse.length;i++) { %>
+        <tr>
+          <form method = "POST" action="/HOD/deleteCourse">
+              <td><input type="hidden" name="courseID" value="<%= selcourse[i].courseID %>"><%= selcourse[i].courseID %></td>
+          <td><input type="hidden" name="name" value="<%= selcourse[i].name %>"><%= selcourse[i].name %></td>
+          <!-- <td><a href = "/admin/deleteCourse"><button>Delete</button></a></td> -->
+          <td><input type="submit" value="Delete"></td>
 
-<div id="viewCourse" class="tabcontent">
-    <h3>View Courses</h3>
-    <% if(course.length>0) { %>
-      <br><br>
-      <button type="button" class="button buttonBlue" ><a href="/admin/courses">View Courses</a>
-       </button>
-    <% }
-    else { %>
-      <h5>Courses not selected by Head of the Departments</h5>
-    <% } %>
+          
+          </form>
+          
+        </tr>
+        <% } %>
+    </table>
 </div>
 </body>
 </html>

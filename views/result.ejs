@@ -13,13 +13,13 @@
                 <th>CourseID</th>
                 <th>Course Name</th>
             </tr>
-            <% for(var i=0; i < data.length; i++) { %>
+            <% for(var i=0; i < result.length; i++) { %>
                 
                 <tr>
-                    <td><%= data[i][0] %></td>
-                    <td><%= data[i][1] %></td>
-                    <td><%= data[i][2] %></td>
-                    <td><%= data[i][3] %></td>
+                    <td><%= result[i].studentID %></td>
+                    <td><%= result[i].Sname %></td>
+                    <td><%= result[i].courseID %></td>
+                    <td><%= result[i].Cname %></td>
                 </tr>
 
             <% } %> 

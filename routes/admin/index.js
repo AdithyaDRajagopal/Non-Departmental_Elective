@@ -71,23 +71,22 @@ router.post('/changePassword',(req,res,next) => {
 
 router.get("/allot",(req,res)=>{
   methods.allotment.allot()
-  .then(result => {
     res.redirect("/admin/dashboard")
-  })
-  .catch(error => {
-    console.log(error)
+})
+
+router.get("/courses",(req,res)=> {
+  methods.course.getCourses()
+  .then(re => {
+    res.render('course',{title:'courses',result:re})
   })
 })
 
-router.post("/result",(req,res) =>{
+router.get("/result",(req,res) =>{
   methods.result.getResults()
   .then(re => {
     res.render('result',{title : 'Result',result: re})
   })  
 })
 
-router.get("/back",(req,res) => {
-  res.redirect("/admin/dasdhboard")
-})
 
 module.exports = router;

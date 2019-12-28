@@ -47,7 +47,7 @@ allotmentMethods.allot = function() {
                                     methods.result.addResult(cid,sid)
                                     .then(re => {
                                         console.log(re)
-                                        break
+                                        y=choice.length
                                     })
                                     .catch(er => {
                                         console.log(er)

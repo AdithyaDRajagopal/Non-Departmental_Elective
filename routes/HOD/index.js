@@ -12,7 +12,10 @@ router.get("/dashboard", (req,res,next) => {
               console.log(re)
               methods.course.getSelectedCourses(dept)
               .then(re2 =>{
+                  if(dept != "MA")
                 res.render('hod', {title : 'HOD Dashboard',course :re, selcourse : re2});
+                else
+                res.render('hodma', {title : 'HOD Dashboard',course :re, selcourse : re2});
               })
             })
             .catch(er => {

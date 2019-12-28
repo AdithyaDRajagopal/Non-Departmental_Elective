@@ -134,11 +134,15 @@ studentMethods.viewChoice = function(userID){
 studentMethods.generateRankList = function() { 
     return new Promise((resolve,reject) => {
         models.student.findAll({
-            order : [['cgpa','DESC']]
+            order : [['cgpa','DESC']],
         })
     })
     .then(res => {
-        resolve(res)
+       // var students = []
+        //    res.forEach(element => {
+         //       students.push(element.dataValues.id)
+          //  });
+            resolve(students)
     })
     .catch(err => {
         reject(err)

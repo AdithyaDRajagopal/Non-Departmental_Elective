@@ -111,11 +111,8 @@
 <br>
    <h6>Select if any of the following electives were opted by the student in semesters 5-8</h6>
    <%for(var i=0;i<elective.length;i++) {%>
-    <tr>
-      <td style="color:white;">
         <input type="checkbox" name="elective" value="<%= elective[i].Cid %>" /><%=elective[i].Cid %>
-      </td>
-    </tr>
+        <br>
     <%}%>
 <br>
 <br>
