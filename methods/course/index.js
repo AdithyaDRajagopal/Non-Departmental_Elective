@@ -123,7 +123,8 @@ courseMethods.getAllCourseDetails = function(){
 */
 
 
-courseMethods.fill = (cid) => {
+courseMethods.fill = (cid,fill) => {
+  fill = fill+1
   return new Promise((resolve, reject) => {
     models.course.findOne({
       where : {
@@ -132,7 +133,7 @@ courseMethods.fill = (cid) => {
     })
       .then((result) => {
         result.update({
-          filled : filled+1
+          filled : fill
         })
         .then( re => {
           resolve(re);
@@ -146,6 +147,31 @@ courseMethods.fill = (cid) => {
         reject(err);
       });
   });
+}
+
+courseMethods.unfill = () => {
+  return new Promise((resolve, reject) => {
+    models.course.findOne({
+      where : {
+        selected : true
+      }
+    })
+    .then(result => {
+      result.update({
+        filled : 0
+      })
+      .then( re => {
+        resolve(re);
+      })
+      .catch( e=>{
+        reject(e);
+      })
+    })
+    .catch(error => { 
+      console.log(error)
+    })
+    })
+    
 }
 
 courseMethods.getOfferedCourses = function(dept){
@@ -218,7 +244,7 @@ courseMethods.getCCEs = function(elective){
 
 courseMethods.getCourse = function(cid){
   return new Promise((resolve,reject) => {
-    models.course.findOne({
+    models.course.findAll({
       where : {
         courseID : cid
       }

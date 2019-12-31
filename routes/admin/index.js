@@ -70,8 +70,63 @@ router.post('/changePassword',(req,res,next) => {
 })
 
 router.get("/allot",(req,res)=>{
-  methods.allotment.allot()
-    res.redirect("/admin/dashboard")
+        methods.student.generateRankList()
+    .then(res => {
+        var dic = {"student":res}
+                    let student = []
+                    for (let i=0; i<dic["student"].length; i+=1) {
+                    student.push(dic["student"][i].dataValues);
+                    }
+                    for(let x=0;x<student.length;x++){
+                        methods.student.viewChoice(student[x].id)
+                        .then(re2 => {
+                            
+                            var dic2 = {"choice":re2}
+                            let choice = []
+                            for (let i=0; i<dic2["choice"].length; i+=1) {
+                            choice.push(dic2["choice"][i].dataValues);
+                            }
+                            for(var y=0;y<choice.length;y++){
+                                methods.course.getCourse(choice[y].courseID)
+                                .then(re3 => {
+                                    var dic3 = {"course":re3}
+                                    let course = []
+                                    for (let i=0; i<dic3["course"].length; i+=1) {
+                                    course.push(dic3["course"][i].dataValues);
+                                    }
+                                    if(course[0].filled < course[0].capacity)
+                                    {   console.log(course[0].filled)
+                                        methods.result.getResultStudent(student[x].id)
+                                        .then(re5 => {
+                                          console.log(re5)
+                                          if(re5 == null){
+                                            methods.result.addResult(course[0].courseID,student[x].id,course[0].name,student[x].name)
+                                        .then(re => {
+                                            console.log(course[0].courseID + "+" + student[x].id + "+" + course[0].name + "+" + student[x].name)
+                                            methods.course.fill(course[0].courseID,course[0].filled)
+                                            .then(r2 => {
+                                                console.log(r2)  
+                                            })
+                                            .catch(e2 => {
+                                                console.log(e2)
+                                            })
+                                        })
+                                        .catch(er => {
+                                           console.log(er)
+                                        })
+                                          }
+                                        })
+                                        
+                                    }
+                                })    
+                            }    
+                        })    
+                    }    
+    })
+    .catch(err => {
+        console.log(err)
+    })
+      res.redirect("/admin/dashboard")
 })
 
 router.get("/courses",(req,res)=> {

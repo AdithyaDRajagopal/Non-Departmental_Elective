@@ -120,7 +120,8 @@ studentMethods.viewChoice = function(userID){
         models.choice.findAll({
             where :{
                 studentID : userID
-            }
+            },
+            order : [['priority','ASC']]
         })
         .then(res=>{
            resolve(res)
@@ -132,20 +133,16 @@ studentMethods.viewChoice = function(userID){
 }
 
 studentMethods.generateRankList = function() { 
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve,reject) =>{
         models.student.findAll({
-            order : [['cgpa','DESC']],
+            order : [['cgpa','DESC']]
         })
-    })
-    .then(res => {
-       // var students = []
-        //    res.forEach(element => {
-         //       students.push(element.dataValues.id)
-          //  });
-            resolve(students)
-    })
-    .catch(err => {
-        reject(err)
+        .then(res => {
+           resolve(res)
+        })
+        .catch(err => {
+            reject(err)
+        })
     })
 }
 

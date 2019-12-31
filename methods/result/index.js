@@ -97,4 +97,18 @@ resultMethods.getResultStudent = (sid) => {
     };  
 
 
+resultMethods.clearResult = () => {
+  return new Promise((resolve,reject) => {
+    models.result.destroy({
+      where : {},
+    })
+    .then(res => {
+      resolve(res)
+    })
+    .catch(err => {
+      reject(err)
+    })
+  })
+}
+
 module.exports = resultMethods
