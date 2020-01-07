@@ -5,6 +5,10 @@ const models = require('../models');
 var { sequelize } = models;
 var auth = require('../middlewares/auth')
 
+router.get('/', (req,res) => {
+   res.redirect('user');
+})
+
 router.get('/user', (req,res) => { 
    res.render('login',{title:'Login'});
 })
