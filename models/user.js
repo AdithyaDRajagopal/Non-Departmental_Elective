@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       type: { 
         allowNull:false,
-        type:DataTypes.ENUM("Admin","HOD","Advisor","Student")
+        type:DataTypes.ENUM("Admin","HOD","Advisor")
     }
   }, {});
   user.associate = function(models) {

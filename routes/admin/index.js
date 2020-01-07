@@ -98,8 +98,8 @@ router.get("/allot",(req,res)=>{
                                     {   console.log(course[0].filled)
                                         methods.result.getResultStudent(student[x].id)
                                         .then(re5 => {
-                                          console.log(re5)
-                                          if(re5 == null){
+                                         console.log(re5.length)
+                                         if(re5.length == 0){
                                             methods.result.addResult(course[0].courseID,student[x].id,course[0].name,student[x].name)
                                         .then(re => {
                                             console.log(course[0].courseID + "+" + student[x].id + "+" + course[0].name + "+" + student[x].name)
@@ -114,10 +114,10 @@ router.get("/allot",(req,res)=>{
                                         .catch(er => {
                                            console.log(er)
                                         })
-                                          }
+                                        }
                                         })
                                         
-                                    }
+                                    } 
                                 })    
                             }    
                         })    

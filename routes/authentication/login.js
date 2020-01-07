@@ -25,8 +25,8 @@ router.post('/',(req,res)=>{
             res.redirect('/HOD/dashboard')    
         else if(result.type == 'Advisor')
             res.redirect('/advisor/dashboard')
-        else if(result.type == "Student")
-            res.redirect('/student/dashboard')
+//        else if(result.type == "Student")
+  //          res.redirect('/student/dashboard')
         
         
     })
