@@ -6,7 +6,7 @@ var { sequelize } = models;
 var auth = require('../middlewares/auth')
 
 router.get('/', (req,res) => {
-   res.redirect('user');
+   res.redirect('/user');
 })
 
 router.get('/user', (req,res) => { 
@@ -30,7 +30,7 @@ router.use('/register',require('./authentication/register'));
 router.use('/admin',auth,require('./admin/index'))
 router.use('/HOD',auth,require('./HOD/index'))
 router.use('/advisor',auth,require('./advisor/index'))
-router.use('/student',auth,require('./student/index'))
+//router.use('/student',auth,require('./student/index'))
 
 router.use('/filltables',require('./filltables'))
 
