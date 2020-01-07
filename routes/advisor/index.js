@@ -51,15 +51,6 @@ router.post("/addStudent", (req,res) => {
     })
 })
 
-router.post("/changePassword", (req,res) => {
-    methods.user.changePasswordStudent(req.body.userID,req.body.password)
-  .then(re => {
-      res.redirect('/advisor/dashboard') 
-  })
-  .catch(er => {
-      res.send({success:false,error:er})
-  })
-})
 
 
 module.exports = router;

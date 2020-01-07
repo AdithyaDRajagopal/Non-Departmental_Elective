@@ -24,7 +24,6 @@ module.exports = (sequelize, DataTypes) => {
   models.student.belongsTo(models.department,{foreignKey:'deptID'})
   models.student.hasMany(models.choice,{ foreignKey: 'studentID' })
   models.student.hasMany(models.elective,{foreignKey: 'studentID'})
-  student.hasOne(models.result,{foreignKey:'studentID'});
   };
   return student;
 };

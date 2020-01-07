@@ -81,7 +81,6 @@
         </style>
 <div class="tab">
   <button class="tablinks" onclick="openCity(event, 'addStudent')">Add Student</button>
-   <button class="tablinks" onclick="openCity(event, 'changePasswordStudent')">Change Password- Student</button>
 </div>
 <div>
   <button style="float:right" ><a href='/logout'>Logout</a></button>
@@ -122,24 +121,6 @@
   </form>
 </div>
 
-
-<div id="changePasswordStudent" class="tabcontent">
-    <h3>Change Password - Student</h3>
-    <form method="POST" action = "/advisor/changePassword">
-        <div class="group">
-            Username<input type="text" name="userID">
-        </div>
-        <div class="group">
-              New Password<input type="password" name="password">
-        </div> 
-        <div class="group">
-            Confirm Password<input type="password" name="conf_password">
-      </div> 
-      <button type="submit" type="button" class="button buttonBlue">Submit
-     
-        </button>
-    </form>
-</div>
 
 </body>
 </html>
