@@ -6,10 +6,10 @@ var { sequelize } = models;
 var auth = require('../middlewares/auth')
 
 router.get('/', (req,res) => {
-   res.redirect('/user');
+   res.render('student-login');
 })
 
-router.get('/user', (req,res) => { 
+router.get('/login', (req,res) => { 
    res.render('login',{title:'Login'});
 })
 
@@ -24,7 +24,7 @@ router.get('/logout',(req,res)=>{
   res.redirect('/');
  })
 
-router.use('/login',require('./authentication/login'));
+router.use('/loginSubmit',require('./authentication/login'));
 router.use('/register',require('./authentication/register'));
 
 router.use('/admin',auth,require('./admin/index'))
