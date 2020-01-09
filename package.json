@@ -10,6 +10,7 @@
     "bcrypt": "^3.0.7",
     "bcrypt-nodejs": "0.0.3",
     "config.json": "0.0.4",
+    "convert-excel-to-json": "^1.6.1",
     "cookie-parser": "^1.4.4",
     "debug": "^4.1.1",
     "ejs": "^3.0.1",

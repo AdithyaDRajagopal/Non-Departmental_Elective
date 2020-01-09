@@ -17,10 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    cgpa : DataTypes.REAL,
-    selected: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false }
+    cgpa : DataTypes.REAL
+    //selected: {
+     // type: DataTypes.BOOLEAN,
+     // defaultValue: false }
   }, {});
   student.associate = function(models) {
     // associations can be defined here

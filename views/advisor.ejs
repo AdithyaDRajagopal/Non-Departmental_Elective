@@ -88,9 +88,9 @@
 
 <div id="addStudent" class="tabcontent">
   <h3>Upload student details (Reg ID, Name, CGPA and email address) :</h3>
-<form method="POST" action="/advisor/upload" >
+<form action="/advisor/upload" method="POST" enctype="multipart/form-data" >
   <input type="file" name="myFile"><br><br>
-  <input type="submit" value="Upload">
+  <button type="submit">Upload</button>
 </form>
 
 </body>

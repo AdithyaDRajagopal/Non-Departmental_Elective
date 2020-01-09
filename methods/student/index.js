@@ -9,15 +9,15 @@ var { sequelize } = models;
 const studentMethods = {};
 const Op = Sequelize.Op;
 
-studentMethods.addStudent = (info,dept,adv) => {
+studentMethods.addStudent = (info,dept) => {
     return new Promise((resolve, reject) => {
       console.log("inside add student")
         var student ={}
-        student.id = info.username
-        student.name = info.name
+        student.id = info.RegID
+        student.name = info.Name
+        student.email = info.email
         student.cgpa = info.cgpa
         student.deptID = dept
-        student.advisorID = adv
         models.student.create(student)
           .then((result) => {
             resolve(result);
