@@ -62,117 +62,7 @@ courseMethods.deleteOfferedCourse = (info) => {
       });
   });
 }
-/*courseMethods.addCourse = (info) => {
-    info.filled = 0;
-    return new Promise((resolve, reject) => {
-      models.Course.create(info)
-        .then((result) => {
-          resolve(result);
-        })
-        .catch((err) => {
-          console.log(err);
-          reject(err);
-        });
-    });
-  };
 
-courseMethods.getAllCourses = function(){
-  return new Promise((resolve,reject)=>{
-    models.Course.findAll({
-      raw : true,
-      attributes : ['id','capacity','filled']
-    })
-    .then(res => {
-      var re = {}
-      res.forEach(element => {
-        var x = []
-        x.push(element.capacity)
-        x.push(element.filled)
-        re[element.id] = x
-      });
-      resolve(re);
-    })
-    .catch(err => {
-      reject(err);
-    })
-  })
-}
-
-
-courseMethods.getAllCourseDetails = function(){
-  return new Promise((resolve,reject)=>{
-    models.Course.findAll({
-      raw : true,
-      attributes : ['id','courseID','name']
-    })
-    .then(res => {
-      var re = {}
-      res.forEach(element => {
-        var x = []
-        x.push(element.courseID)
-        x.push(element.name)
-        re[element.id] = x
-      });
-      resolve(re);
-    })
-    .catch(err => {
-      reject(err);
-    })
-  })
-}
-*/
-
-
-courseMethods.fill = (cid,fill) => {
-  fill = fill+1
-  return new Promise((resolve, reject) => {
-    models.course.findOne({
-      where : {
-        courseID : cid
-      }
-    })
-      .then((result) => {
-        result.update({
-          filled : fill
-        })
-        .then( re => {
-          resolve(re);
-        })
-        .catch( e=>{
-          reject(e);
-        })
-      })
-      .catch((err) => {
-        console.log(err);
-        reject(err);
-      });
-  });
-}
-
-courseMethods.unfill = () => {
-  return new Promise((resolve, reject) => {
-    models.course.findOne({
-      where : {
-        selected : true
-      }
-    })
-    .then(result => {
-      result.update({
-        filled : 0
-      })
-      .then( re => {
-        resolve(re);
-      })
-      .catch( e=>{
-        reject(e);
-      })
-    })
-    .catch(error => { 
-      console.log(error)
-    })
-    })
-    
-}
 
 courseMethods.getOfferedCourses = function(dept){
   return new Promise((resolve,reject) => {
@@ -279,7 +169,7 @@ courseMethods.getAllCourses = function(){
   return new Promise((resolve,reject)=>{
     models.course.findAll({
       raw : true,
-      attributes : ['id','capacity','filled'],
+      attributes : ['courseID','capacity','filled'],
       where : {
         selected: true
       }
@@ -290,7 +180,7 @@ courseMethods.getAllCourses = function(){
         var x = []
         x.push(element.capacity)
         x.push(element.filled)
-        re[element.id] = x
+        re[element.courseID] = x
       });
       resolve(re);
     })
@@ -300,39 +190,5 @@ courseMethods.getAllCourses = function(){
   })
 }
 
-/*
-courseMethods.getCourse = function(id){
-  return new Promise((resolve,reject) => {
-    models.Course.findOne({
-      raw : true,
-      where : {
-        id : id
-      },
-      attributes : ['courseID','name']
-    })
-    .then(res => {
-      resolve(res)
-    })
-    .catch(err => {
-      reject(err)
-    })
-  })
-}
-/*
-courseMethods.deleteCourse = function(id){
-  return new Promise((resolve,reject) => {
-    models.Course.destroy({
-      raw : true,
-      where : {
-        courseID : id
-      }})
-    .then(res => {
-      resolve(res)
-    })
-    .catch(err => {
-      reject(err)
-    })
-  })
-}
-*/
+
   module.exports = courseMethods;

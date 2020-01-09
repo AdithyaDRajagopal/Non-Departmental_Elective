@@ -7,14 +7,12 @@ var { sequelize } = models;
 const resultMethods = {};
 const Op = Sequelize.Op;
 
-resultMethods.addResult = (cid,sid,cname,sname) => {
+resultMethods.addResult = (info) => {
     return new Promise((resolve, reject) => {
         console.log("inside add elective")
           var result ={}
-          result.CID = cid
-          result.studentID = sid 
-          result.Cname = cname
-          result.Sname = sname
+          result.courseID = info.courseID
+          result.studentID = info.studentID 
           models.result.create(result)
             .then((result) => {
               resolve(result);

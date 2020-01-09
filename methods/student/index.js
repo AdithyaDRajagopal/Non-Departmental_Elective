@@ -150,6 +150,42 @@ studentMethods.generateRankList = function() {
     })
 }
 
+studentMethods.getStudentPreferences = function(studentID){
+    return new Promise((resolve,reject) => {
+        models.choice.findAll()
+        .then(res => {
+          // console.log(res)
+          var pref = {}
+          res.forEach(element => {
+            if (!(element.dataValues.studentID in pref)){
+              pref[element.dataValues.studentID] = [];
+              // pref[element.dataValues.studentID].push(element.dataValues.courseID)
+              pref[element.dataValues.studentID].push(element.dataValues.courseID);
+            }
+            else
+            pref[element.dataValues.studentID].push(element.dataValues.courseID);
+          });
+          // var cids = [];
+          // res.forEach(element => {
+          //   cids[element.dataValues.preferenceLevel - 1] = element.dataValues.courseID;
+          // });
+          preferences = []  
+          studentID.forEach(student => {
+            // preferences[student] = pref[student]
+            // console.log(student)
+            var studObj = new Object();
+            studObj[student] = pref[student]
+            preferences.push(studObj)
+            // console.log(pref[stude])
+          });
+          resolve(preferences)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+  }
+
 /*studentMethods.getAllStudentsDesc = function(){
     return new Promise((resolve,reject) =>{
         models.Student.findAll({
