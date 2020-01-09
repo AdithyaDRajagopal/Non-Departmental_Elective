@@ -138,7 +138,11 @@ studentMethods.generateRankList = function() {
             order : [['cgpa','DESC']]
         })
         .then(res => {
-           resolve(res)
+            var students = []
+            res.forEach(element => {
+                students.push(element.dataValues.id)
+            });
+            resolve(students)
         })
         .catch(err => {
             reject(err)

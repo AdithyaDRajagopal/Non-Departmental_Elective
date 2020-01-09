@@ -274,6 +274,32 @@ courseMethods.getCourses = function(){
     })
   })
 }
+
+courseMethods.getAllCourses = function(){
+  return new Promise((resolve,reject)=>{
+    models.course.findAll({
+      raw : true,
+      attributes : ['id','capacity','filled'],
+      where : {
+        selected: true
+      }
+    })
+    .then(res => {
+      var re = {}
+      res.forEach(element => {
+        var x = []
+        x.push(element.capacity)
+        x.push(element.filled)
+        re[element.id] = x
+      });
+      resolve(re);
+    })
+    .catch(err => {
+      reject(err);
+    })
+  })
+}
+
 /*
 courseMethods.getCourse = function(id){
   return new Promise((resolve,reject) => {
