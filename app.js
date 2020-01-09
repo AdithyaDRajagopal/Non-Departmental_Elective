@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
-
+var upload = require('express-fileupload')
 var indexRouter = require('./routes/index');
 
 
@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret: "Shh, its a secret!"}));
-
+app.use(upload())
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler

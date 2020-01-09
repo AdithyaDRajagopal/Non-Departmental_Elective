@@ -97,36 +97,5 @@ userMethods.changePasswordAdvisor = function(username,password)  {
   })
 }
 
-userMethods.changePasswordStudent = function(username,password)  {
-  return new Promise((resolve,reject) => {
-    models.user.findOne({
-      where : {
-        username : username ,
-        type : 4
-      }
-    })
-    .then(user => {
-      bcrypt.hash(password, saltRounds).then(hash => {
-          user.update({
-            password : hash
-          }) 
-          .then(r => {
-            resolve(r)
-          })
-          .catch(e => {
-            reject(e)
-          })
-      })
-      .catch(er => {
-        reject(er)
-      })
-  })
-  .catch(err => {
-    reject(err)
-  })
-
-  })
-}
-
   
   module.exports = userMethods;

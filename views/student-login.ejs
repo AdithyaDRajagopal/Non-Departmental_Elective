@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script
+  src="http://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="javascript" type="text/javascript" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script >
+    window.addEventListener( "pageshow", function ( event ) {
+     console.log("here")
+  var historyTraversal = event.persisted || 
+                         ( typeof window.performance != "undefined" && 
+                              window.performance.navigation.type === 2 );
+  if ( historyTraversal ) {
+
+    window.location.reload();
+  }
+});
+    $(window, document, undefined).ready(function() {
+$('input').blur(function() {
+  var $this = $(this);
+  if ($this.val())
+    $this.addClass('used');
+  else
+    $this.removeClass('used');
+});
+var $ripples = $('.ripples');
+$ripples.on('click.Ripples', function(e) {
+  var $this = $(this);
+  var $offset = $this.parent().offset();
+  var $circle = $this.find('.ripplesCircle');
+  var x = e.pageX - $offset.left;
+  var y = e.pageY - $offset.top;
+  $circle.css({
+    top: y + 'px',
+    left: x + 'px'
+  });
+  $this.addClass('is-active');
+});
+
+$ripples.on('animationend webkitAnimationEnd mozAnimationEnd oanimationend MSAnimationEnd', function(e) {
+    $(this).removeClass('is-active');
+});
+});</script>
+  <link rel="javascript" type="text/javascript" href="js/main.js">
+  </head>
+  <body>
+        <div class="row" style="height:100vh;">
+          <div class="col-lg-6 col-md-12">
+            <h3 class="heading" style="text-align:center;">Global Elective for S8</h3>
+            <img src="img/edubg.jpg" style="text-align: center; height:60%; margin-bottom:0px;">
+           
+          </div>
+          <div class="col-lg-6 col-md-12">
+   <form method="POST" action="/loginSubmit">
+  <div class="group">
+      <label>Username</label>
+    <input type="text" id="username" name="username"><span class="highlight"></span><span class="bar"></span>
+  </div>
+  <div class="group">
+      <label>Password</label>
+    <input type="password" id="password" name="password"><span class="highlight"></span><span class="bar"></span> 
+  </div>
+  <button type="submit" class="button buttonBlue" id="loginButton">Login
+    <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
+  </button>
+</form>
+</div>
+</div>
+  </body>
+</html>

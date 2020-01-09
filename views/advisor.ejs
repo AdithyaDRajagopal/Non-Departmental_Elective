@@ -80,47 +80,18 @@
 }
         </style>
 <div class="tab">
-  <button class="tablinks" onclick="openCity(event, 'addStudent')">Add Student</button>
+  <button class="tablinks" onclick="openCity(event, 'addStudent')">Enter Student Details</button>
 </div>
 <div>
   <button style="float:right" ><a href='/logout'>Logout</a></button>
 </div>
 
 <div id="addStudent" class="tabcontent">
-  <h3>Add Student</h3>
-  <br>
-  <form method="POST" action="/advisor/addStudent">
-    
-     <div class="group">
-        <label>Registration ID</label>
-      <input type="text" name="username"><span class="highlight"></span><span class="bar"></span>
-    </div>
-    
-    <div class="group">
-        <label>Name</label>
-      <input type="text" name="name"><span class="highlight"></span><span class="bar"></span>
-    </div>
-  
-        <label>Password</label>
-      <input type="password" name="password" style="width:40%;"><span class="highlight"></span><span class="bar"></span>
-    
-      <label>CGPA</label>
-    <input type="number" step="0.01" name="cgpa"  style="width:20%;"><span class="highlight"></span><span class="bar"></span>
-<br>
-<br>
-   <h6>Select if any of the following electives were opted by the student in semesters 5-8</h6>
-   <%for(var i=0;i<elective.length;i++) {%>
-        <input type="checkbox" name="elective" value="<%= elective[i].Cid %>" /><%=elective[i].Cid %>
-        <br>
-    <%}%>
-<br>
-<br>
-    <button type="submit" type="button" class="button buttonBlue">Add Student
-      <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
-    </button>
-  </form>
-</div>
-
+  <h3>Upload student details (Reg ID, Name, CGPA and email address) :</h3>
+<form method="POST" action="/advisor/upload" >
+  <input type="file" name="myFile"><br><br>
+  <input type="submit" value="Upload">
+</form>
 
 </body>
 </html>

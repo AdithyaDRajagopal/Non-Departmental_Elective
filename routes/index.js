@@ -6,7 +6,7 @@ var { sequelize } = models;
 var auth = require('../middlewares/auth')
 
 router.get('/', (req,res) => {
-   res.render('student-login');
+   res.render('student-login',{title:'Login'});
 })
 
 router.get('/login', (req,res) => { 

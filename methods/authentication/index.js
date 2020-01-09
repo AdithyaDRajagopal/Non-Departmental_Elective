@@ -109,40 +109,6 @@ authenticationMethods.registerAdvisor = function(info) {
   });
 };
 
-authenticationMethods.registerStudent = function(info) {
-  return new Promise(function(resolve, reject) {
-    bcrypt.hash(info.password, saltRounds).then(hash=>{
-      return sequelize
-      .transaction(function(t) {
-        var user = {}
-       user.username = info.username
-       user.password = hash
-       user.type = 4
-      //  console.log(hash)
-        return models.user
-          .create(user, { transaction: t })
-          .then(function(user) {
-          // console.log(user)
-           
-          })
-          .catch(function(err) {
-            reject({ success: err });
-          });
-      })
-      .then(function(result) {
-        console.log("SUCCESS")
-        resolve({ success: true });
-      })
-      .catch(function(err) {
-        reject({ success: "false3" });
-      });
-    })
-    .catch(err=>{
-      reject({success : "false4"});
-    })
-  });
-};
-
 
 authenticationMethods.authenticateUser = function(username, password) {
   return new Promise(function(resolve, reject) {
