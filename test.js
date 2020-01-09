@@ -36,6 +36,10 @@ methods.student.generateRankList()
                          var stud_allot={}
                          stud_allot['studentID'] = studentID;
                          stud_allot['courseID'] = course;
+                         methods.course.getCourse(course)
+                         .then(crs => {
+                             console.log(crs.dataValues)
+                         })
                          allotment.push(stud_allot);
                          break;
                      }

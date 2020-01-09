@@ -1,25 +1,46 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
- </head>
-  <body>
-    <div>
-        <table>
-            <tr>
-                <th>CourseID</th>
-                <th>Course Name</th>
-            </tr>
+<head>
+<title>
+Allotment List
+</title>
+
+<link rel="stylesheet" href="/result.css" type="text/css"></link>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body style="background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(45,203,119,1) 0%, rgba(0,212,255,1) 100%);">
+
+        <div class="jumbotron">
+                <h1>
+                    ALLOTTMENT LIST
+                </h1>
+                <p>
+                    <a href="/admin/back" class="btn btn-info btn-lg">
+                      <span class="glyphicon glyphicon-log-out"></span> Back
+                    </a>
+                  </p>
+                </div>
+<div class="allotment-table">
+    <table class="content-table">
+        <thead>
+          <tr>
+            <th>Course ID</th>
+            <th>Course Name</th>
+          </tr>
+        </thead>
+        <tbody>
             <% for(var i=0; i < result.length; i++) { %>
                 
-                <tr>
-                    <td><%= result[i].courseID %></td>
-                    <td><%= result[i].name %></td>
-                </tr>
+              <tr>
+                  <td><%= result[i].courseID %></td>
+                  <td><%= result[i].name %></td>
+              </tr>
 
-            <% } %> 
-        </table>
-    </div>
-  </body>
+          <% } %> 
+        </tbody>
+      </table>
+</div>
+
+</body>
 </html>

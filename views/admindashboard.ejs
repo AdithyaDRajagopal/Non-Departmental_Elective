@@ -88,6 +88,8 @@
   <button class="tablinks" onclick="openCity(event, 'addHOD')">Add HOD</button>
   <button class="tablinks" onclick="openCity(event, 'changePasswordHOD')">Change Password - HOD</button>
   <button class="tablinks" onclick="openCity(event, 'viewCourse')">View Courses</button>
+  <button class="tablinks" onclick="openCity(event, 'uploadDetails')">Upload Student Details</button>
+  <button class="tablinks" onclick="openCity(event, 'viewResult')">View Result</button>
 </div>
 <div>
   <button style="float:right" ><a href='/logout'>Logout</a></button>
@@ -123,9 +125,6 @@
     <br><br>
     <button type="button" class="button buttonBlue" ><a href="/admin/allot">Perform Allotment</a>
      </button>
-     <br><br>
-     <button type="button" class="button buttonBlue" ><a href="/admin/result">View Results</a>
-     </button>
     </div>
 
 <div id="changePasswordHOD" class="tabcontent">
@@ -157,5 +156,49 @@
       <h5>Courses not selected by Head of the Departments</h5>
     <% } %>
 </div>
+
+<div id="uploadDetails" class="tabcontent">
+  <h3>Upload student details (Reg ID, Name, CGPA, email and Department) :</h3>
+<form action="/admin/upload" method="POST" enctype="multipart/form-data" >
+  <input type="file" name="myFile"><br><br>
+  <button type="submit">Upload</button>
+</form>
+
+</div>
+
+<div id="viewResult" class="tabcontent">
+  <h3>View Results</h3> 
+    <br>
+    <form method="POST" action="/admin/result">
+    <h4>Search by:</h4>
+    <br>
+    <div class="group">
+      <h5>Department</h5>
+      <select name="deptID">
+        <option value="none">None</option>
+          <% for(var i=0;i<dept.length;i++) { %>
+            <% if(dept[i].Did != "MA") {%>
+              <option value=<%= dept[i].Did %>><%= dept[i].Dname %> </option>
+            <% } %>
+          <%} %>
+      </select>
+    </div>
+    <br>
+    <div class="group">
+    <h5>Course</h5>
+      <select name="courseID">
+        <option value="none">None</option>
+          <% for(var i=0;i<course.length;i++) { %>
+              <option value=<%= course[i].courseID %>><%= course[i].name %> </option>
+          <%} %>
+      </select>
+    </div>
+    <br>
+    <button type="submit" class="button buttonBlue" >View Results
+    </button>
+    </form>
+</div>
+    
+
 </body>
 </html>

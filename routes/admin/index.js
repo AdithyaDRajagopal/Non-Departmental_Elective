@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const models = require('../../models')
 const methods = require('../../methods')
+const importExcel = require('convert-excel-to-json')
 
 router.get('/dashboard',(req,res,next)=>{
   methods.HOD.getHODs().then(function(result){
@@ -134,15 +135,88 @@ router.get("/courses",(req,res)=> {
   })
 })
 
-router.get("/result",(req,res) =>{
-  methods.result.getResults()
-  .then(re => {
-    res.render('result',{title : 'Result',result: re})
-  })  
-})
-
 router.get("/back",(req,res)=>{
     res.redirect("/admin/dashboard")
+})
+
+router.get("/upload",(req,res)=>{
+        let file = req.files.myFile;
+        let filename = file.name;
+        let details = [];
+        dept = result.dataValues.deptID
+        file.mv('./excel/'+filename,(err)=>{
+                if(err) {
+                        console.log(err)
+                }
+                else{
+                        let result = importExcel({
+                                        sourceFile: './excel/' +filename,
+                                        header : {rows:1},
+                                        columnToKey : {A:'RegID',B:'Name',C:'email',D:'cgpa',E:'Dept'},
+                                        sheets : ['Sheet1']
+                        });
+                        for(var i=0;i<result.Sheet1.length;i++){
+                                methods.student.addStudent(result.Sheet1[i],result.Sheet1[i].Dept);
+                        }
+                        console.log(details)
+                }
+        })
+        res.redirect("/admin/dashboard")
+})
+
+router.post("/result",(req,res) =>{
+    var dept = req.body.deptID
+    var course = req.body.courseID
+    if(dept == "none" && course == "none"){
+      methods.result.getResults()
+      .then(re => {
+        methods.course.getCourses()
+        .then(crs => {
+          methods.student.getAllStudents()
+          .then(stud =>{
+            res.render('result',{result: re, course: crs,student:stud})
+          })
+         
+        })
+      })
+    }
+    else if(dept == "none"){
+      methods.result.getResults()
+      .then(re => {
+        methods.course.getCourse(course)
+        .then(crs => {
+          methods.student.getAllStudents()
+          .then(stud =>{
+            res.render('result',{result: re, course: crs,student:stud})
+          })
+        })
+      })
+    }
+    else if(course == "none"){
+      methods.result.getResults()
+      .then(re => {
+        methods.course.getCourses()
+        .then(crs => {
+          methods.student.getAllStudentsDept(dept)
+          .then(stud =>{
+            res.render('result',{result: re, course: crs,student:stud})
+          })
+        })
+      })
+    }
+    else {
+      methods.result.getResults()
+      .then(re => {
+        methods.course.getCourse(course)
+        .then(crs => {
+          methods.student.getAllStudentsDept(dept)
+          .then(stud =>{
+            res.render('result',{result: re, course: crs,student:stud})
+          })
+         
+        })
+      })
+    }
 })
 
 module.exports = router;
