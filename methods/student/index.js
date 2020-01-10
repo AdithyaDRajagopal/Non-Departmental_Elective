@@ -29,6 +29,39 @@ studentMethods.addStudent = (info,dept) => {
       });
   }
 
+ studentMethods.getAllStudents = () => {
+    console.log('inside get all students');
+    return new Promise((resolve, reject) => {
+      models.student.findAll()
+        .then((result) => {
+          resolve(result);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  };
+
+  studentMethods.getAllStudentsDept = (dept) => {
+    console.log('inside get all students');
+    return new Promise((resolve, reject) => {
+      models.student.findAll({
+        where : {
+          deptID : dept
+        }
+      })
+        .then((result) => {
+          resolve(result);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  };
+
+
 studentMethods.getStudentDetails = function(userID){
     console.log("Inside get student ID")
     console.log(userID)

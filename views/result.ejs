@@ -25,18 +25,26 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(45,203,119,1) 0%, rgb
     <table class="content-table">
         <thead>
           <tr>
-            <th>Student Id</th>
-            <th>Allotted Course</th>
+            <th>Course ID</th>
+            <th>Course Name</th>
+            <th>Student ID</th>
+            <th>Student Name</th>
           </tr>
         </thead>
         <tbody>
             <% for(var i=0; i < result.length; i++) { %>
-                
-              <tr>
-                  <td><%= result[i].studentID %></td>
-                  <td><%= result[i].courseID %></td>
-              </tr>
-
+              <% for(var j=0; j < course.length; j++) { %>
+                <% for(var k=0;k < student.length; k++) { %>
+                  <% if(result[i].courseID == course[j].courseID && result[i].studentID == student[k].id) {%>
+                    <tr>
+                      <td><%= result[i].courseID %></td>
+                      <td><%= course[j].name %></td>
+                      <td><%= result[i].studentID %></td>
+                      <td><%= student[k].name %></td>
+                  </tr>
+                  <% } %>
+                <% } %>
+            <% } %> 
           <% } %> 
         </tbody>
       </table>
