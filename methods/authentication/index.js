@@ -5,7 +5,15 @@ const models = require("../../models");
 const Promise = require("bluebird");
 const key = require("../../config/api.json").API_SECRET;
 const { sequelize } = require("../../models");
+const otpGenerator = require('otp-generator');
+const nodemailer = require("nodemailer");
 var authenticationMethods = {};
+const options = {
+  digits: true,
+  alphabets: false,
+  upperCase: false,
+  specialChars: false
+}
 
 authenticationMethods.registerAdmin = function(info) {
   return new Promise(function(resolve, reject) {
@@ -158,5 +166,110 @@ authenticationMethods.authenticateUser = function(username, password) {
       });
   });
 };
+
+authenticationMethods.authenticateStudent = function(username) {
+  return new Promise(function(resolve, reject) {
+    models.student
+      .findOne({
+        where: {
+          id: username
+        }
+      })
+      .then(result => {
+        if (result) {
+          console.log(result);
+          const emailid = result.dataValues.email;
+          // console.log(result.dataValues.email);
+          if(result.dataValues.verified === 0){
+            const otptoken = otpGenerator.generate(6, options);
+            // console.log(otptoken);
+            var transporter = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: 'adithyarajagopal1999@cet.ac.in',
+                pass: ''
+              }
+            });
+            var mailOptions = {
+              from: 'adithyarajagopal1999@cet.ac.in',
+              to: emailid,
+              subject: "OTP",
+              // text: `Your one time password is ${otptoken}`
+              html: `<p>Your One-Time Password is <b>${otptoken}</b></p>`
+            }
+            transporter.sendMail(mailOptions, function(error, info){
+              if(error){
+                console.log(error);
+              }
+              else {
+                console.log('Email sent: ' + info.response);
+              }
+            })
+            resolve({
+                success: true,
+                token: otptoken,
+              });
+          }
+        } else {
+          reject(new Error());
+        }
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+// authenticationMethods.authenticateOtp = function(username, token) {
+//   return new Promise(function(resolve, reject) {
+//     models.student
+//       .findOne({
+//         where: {
+//           id: username
+//         }
+//       })
+//       .then(result => {
+//         if (result) {
+//           console.log(result);
+//           const emailid = result.dataValues.email;
+//           // console.log(result.dataValues.email);
+//           if(result.dataValues.verified === 0){
+//             const otptoken = otpGenerator.generate(6, options);
+//             // console.log(otptoken);
+//             var transporter = nodemailer.createTransport({
+//               service: 'gmail',
+//               auth: {
+//                 user: 'justinebiju05@gmail.com',
+//                 pass: 'Sandia06'
+//               }
+//             });
+//             var mailOptions = {
+//               from: 'justinebiju05@gmail.com',
+//               to: emailid,
+//               subject: "OTP",
+//               // text: `Your one time password is ${otptoken}`
+//               html: `<p size=15>Your One-Time Password is <b>${otptoken}</b></p>`
+//             }
+//             transporter.sendMail(mailOptions, function(error, info){
+//               if(error){
+//                 console.log(error);
+//               }
+//               else {
+//                 console.log('Email sent: ' + info.response);
+//               }
+//             })
+//             resolve({
+//                 success: true,
+//                 token: otptoken,
+//               });
+//           }
+//         } else {
+//           reject(new Error());
+//         }
+//       })
+//       .catch(err => {
+//         reject(err);
+//       });
+//   });
+// };
 
 module.exports = authenticationMethods;

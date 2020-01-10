@@ -1,7 +1,7 @@
 {
     "development": {
       "username": "root",
-      "password": "LINUX@1991v6",
+      "password": "Sandia06",
       "database": "globalelective",
       "host": "127.0.0.1",
       "dialect": "mysql"

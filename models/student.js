@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    cgpa : DataTypes.REAL
+    cgpa : DataTypes.REAL,
+    verified : DataTypes.INTEGER
     //selected: {
      // type: DataTypes.BOOLEAN,
      // defaultValue: false }
