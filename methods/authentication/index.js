@@ -184,7 +184,7 @@ authenticationMethods.authenticateStudent = function(username) {
               service: 'gmail',
               auth: {
                 user: 'adithyarajagopal1999@gmail.com',
-                pass: 'appuachu'
+                pass: 'password'
               }
             });
             var mailOptions = {
