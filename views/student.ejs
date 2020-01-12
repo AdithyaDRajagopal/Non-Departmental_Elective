@@ -107,7 +107,8 @@
 </div>
 
 <div id="selCourses" class="tabcontent">
-  <h3>Select Courses</h3>
+  <% if(data.length > 0) {%> 
+    <h3>Select Courses</h3>
     <form method="POST" action = '/student/selectCourse'>
       <br><br>
       <div class="group">
@@ -120,7 +121,12 @@
         <button type="submit"  class="button buttonBlue">Add Course
         </button>
       </div>
-</form>
+      </form>
+    <%} 
+      else {%>
+        <h4>All the courses have been selected</h4>
+      <%} %>
+      
 </div>
 
 <div id="viewCourses" class="tabcontent">
