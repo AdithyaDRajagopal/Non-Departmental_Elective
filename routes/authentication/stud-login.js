@@ -15,6 +15,7 @@ router.post('/',(req,res)=>{
     .then(result => {
         // console.log(result.token);
         state.token = result.token;
+        res.render('otp',{user : state.username})
     })
 })
 
@@ -26,7 +27,26 @@ router.post('/confirmOtp',(req,res)=>{
     //     state.token = result.token;
     // })
     if(state.username === req.body.username && state.token === req.body.otp){
-        console.log("Worked");
+        console.log("Inside post /login")
+        username = req.body.username;
+        // req.userID = userID;
+        // req.
+        methods.authentication.authenticateStud(username)
+        .then(result=>{
+            console.log("Logged in")
+            console.log(result.token)
+            req.token = result.token
+            req.session.token = result.token
+            if(result.type === "student"){
+                res.redirect("/student/dashboard")        
+            }
+              
+        })
+        .catch(err=>{
+           
+            console.log(err)
+            res.status(400).json({success : false})
+        })
     }
     else {
         console.log("Wrong OTP");

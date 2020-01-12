@@ -18,10 +18,9 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     cgpa : DataTypes.REAL,
-    verified : DataTypes.INTEGER
-    //selected: {
-     // type: DataTypes.BOOLEAN,
-     // defaultValue: false }
+    noc : {
+       type: DataTypes.INTEGER,
+       defaultValue: 0 }
   }, {});
   student.associate = function(models) {
     // associations can be defined here

@@ -58,7 +58,13 @@ router.get("/dashboard", (req,res,next) => {
                         }  
                         methods.student.getEligibleCourses(CCE,CNE,choice)
                         .then(re => {
-                            res.render('student', {title : 'Student Dashboard',data :re,choice: re4});
+                            methods.course.getCourses()
+                            .then(re5 => {
+                                methods.result.getResultStudent(sid)
+                                .then(re6 => {
+                                    res.render('student', {title : 'Student Dashboard',data :re,choice: re4,course:re5,result:re6});
+                                })
+                            })
                         })
             })
         })
@@ -79,10 +85,15 @@ router.post("/selectCourse",(req,res) => {
     .then(rest => {
         var sid = rest.dataValues.id
         var cid = req.body.courseID
+        var noc = rest.dataValues.noc
         methods.student.addChoice(sid,cid)
         .then(result => {
             console.log(result)
-            res.redirect("/student/dashboard")
+            noc = noc+1
+            methods.student.modifyNoc(sid,noc)
+            .then(re=> {
+                res.redirect("/student/dashboard")
+            })
         })
     })
     .catch(err => {
@@ -95,10 +106,15 @@ router.post("/deleteCourse",(req,res) => {
     .then(rest => {
         var sid = rest.dataValues.id
         var cid = req.body.courseID
+        var noc = rest.dataValues.noc
         methods.student.deleteChoice(sid,cid)
         .then(result => {
             console.log(result)
-            res.redirect("/student/dashboard")
+            noc = noc-1
+            methods.student.modifyNoc(sid,noc)
+            .then(re => {
+                res.redirect("/student/dashboard")
+            })   
         })
     })
     .catch(err => {

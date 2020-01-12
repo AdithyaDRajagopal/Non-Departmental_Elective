@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script
   src="http://code.jquery.com/jquery-3.3.1.min.js"
@@ -57,19 +56,28 @@ $ripples.on('animationend webkitAnimationEnd mozAnimationEnd oanimationend MSAni
            
           </div>
           <div class="col-lg-6 col-md-12">
-   <form method="POST" action="/studLogin">
+   <form method="POST" action="/studLogin/confirmOtp">
   <div class="group">
       <label>KTU Registration Number</label>
-    <input type="text" id="username" name="username"><span class="highlight"></span><span class="bar"></span>
+      <select name="username">
+        <option value=<%=user%>><%= user %> </option>
   </div>
   <!-- <div class="group">
       <label>Password</label>
     <input type="password" id="password" name="password"><span class="highlight"></span><span class="bar"></span> 
   </div> -->
-  <button type="submit" class="button buttonBlue" id="loginButton">Generate OTP
+  <br><br>
+  <div class="group">
+      <label>Enter OTP Here</label>
+    <input type="text" id="otp" name="otp"><span class="highlight"></span><span class="bar"></span>
+  </div>
+  <!-- <div class="group">
+      <label>Password</label>
+    <input type="password" id="password" name="password"><span class="highlight"></span><span class="bar"></span> 
+  </div> -->
+  <button type="submit" class="button buttonBlue" id="otpButton">Login
     <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
   </button>
-  <br><br>
 </form>
 </div>
 </div>

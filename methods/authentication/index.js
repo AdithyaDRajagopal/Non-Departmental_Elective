@@ -169,29 +169,26 @@ authenticationMethods.authenticateUser = function(username, password) {
 
 authenticationMethods.authenticateStudent = function(username) {
   return new Promise(function(resolve, reject) {
-    models.student
-      .findOne({
+    models.student.findOne({
         where: {
           id: username
         }
       })
       .then(result => {
         if (result) {
-          console.log(result);
           const emailid = result.dataValues.email;
-          // console.log(result.dataValues.email);
-          if(result.dataValues.verified === 0){
+           console.log(result.dataValues.email);
             const otptoken = otpGenerator.generate(6, options);
-            // console.log(otptoken);
+             console.log(otptoken);
             var transporter = nodemailer.createTransport({
               service: 'gmail',
               auth: {
-                user: 'adithyarajagopal1999@cet.ac.in',
-                pass: ''
+                user: 'adithyarajagopal1999@gmail.com',
+                pass: 'appuachu'
               }
             });
             var mailOptions = {
-              from: 'adithyarajagopal1999@cet.ac.in',
+              from: 'adithyarajagopal1999@gmail.com',
               to: emailid,
               subject: "OTP",
               // text: `Your one time password is ${otptoken}`
@@ -209,7 +206,6 @@ authenticationMethods.authenticateStudent = function(username) {
                 success: true,
                 token: otptoken,
               });
-          }
         } else {
           reject(new Error());
         }
@@ -219,6 +215,48 @@ authenticationMethods.authenticateStudent = function(username) {
       });
   });
 };
+
+authenticationMethods.authenticateStud = function(username) {
+  return new Promise(function(resolve, reject) {
+    models.student
+      .findOne({
+        where: {
+          id: username
+        }
+      })
+      .then(result => {
+        if (result) {
+          // console.log(result)
+              console.log("correct password-bcrypt");
+              const token = jwt.sign(
+                {
+                  id: result.id,
+                  type: "student",
+                },
+                key,
+                { expiresIn: "1h" }
+              );
+              const type = "student";
+              const user_id = result.dataValues.id;
+              var decoded = jwt.decode(token, { complete: true });
+              console.log(user_id + " " + type);
+              
+              resolve({
+                success: true,
+                token: token,
+                type: type,
+                user_id: user_id
+              });
+        } else {
+          reject(new Error());
+        }
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+
 // authenticationMethods.authenticateOtp = function(username, token) {
 //   return new Promise(function(resolve, reject) {
 //     models.student

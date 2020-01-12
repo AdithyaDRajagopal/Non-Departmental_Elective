@@ -168,7 +168,7 @@ studentMethods.viewChoice = function(userID){
 studentMethods.generateRankList = function() { 
     return new Promise((resolve,reject) =>{
         models.student.findAll({
-            order : [['cgpa','DESC']]
+            order : [['cgpa','DESC'],['updatedAt','ASC']]
         })
         .then(res => {
             var students = []
@@ -219,86 +219,29 @@ studentMethods.getStudentPreferences = function(studentID){
     })
   }
 
-/*studentMethods.getAllStudentsDesc = function(){
-    return new Promise((resolve,reject) =>{
-        models.Student.findAll({
-            order : [['cgpa','DESC']]
+studentMethods.modifyNoc = (sid,noc) => {
+  return new Promise((resolve, reject) => {
+    models.student.findOne({
+      where : {
+        id : sid
+      }
+    })
+    .then((result) => {
+        result.update({
+          noc : noc
         })
-        .then(res => {
-            var students = []
-            res.forEach(element => {
-                students.push(element.dataValues.id)
-            });
-            resolve(students)
+        .then( re => {
+          resolve(re);
         })
-        .catch(err => {
-            reject(err)
+        .catch( e=>{
+          reject(e);
         })
     })
-}
-
-/*
-studentMethods.allowedCourses = function(studentID){
-    console.log(this)
-    return new Promise(function(resolve,reject) {
-        models.Student.findOne({
-            raw : true,
-            where : {
-                regID : studentID
-            },
-            attributes : ['deptID']
-        })
-        .then(function(res){
-            console.log(res)
-            var deptID = res.deptID;
-            // console.log(method)
-            departmentMethods.getCoursesElligibleForDept(deptID)
-            .then(re => {
-                resolve(re)
-            })
-            .catch(er => {
-                reject(er)
-            })
-            
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    })
-
-    // return new Promise((resolve,reject) => {
-    //     models.Student.findAll()
-    //     .then(res => {
-    //         resolve(['C01','C02',"C03"]);
-    //     })
-    //     .catch()
-
-    // })
-}
-
-
-
-studentMethods.getAllStudentDetails = function(){
-    return new Promise((resolve,reject)=>{
-      models.Student.findAll({
-        raw : true,
-        attributes : ['id','regID','name']
-      })
-      .then(res => {
-        var re = {}
-        res.forEach(element => {
-          var x = []
-          x.push(element.regID)
-          x.push(element.name)
-          re[element.id] = x
-        });
-        resolve(re);
-      })
-      .catch(err => {
+    .catch((err) => {
+        console.log(err);
         reject(err);
-      })
-    })
-  }
-  
-*/
+      });
+  });
+}
+
 module.exports = studentMethods;

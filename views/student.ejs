@@ -120,24 +120,43 @@
     <tr>
       <th>Priority</th>
       <th>Course Code</th>
+      <th>Course Name</th>
       <!-- <th>Edit </th> -->
       <th>Delete</th>
     </tr>
     <% for(var i=0;i<choice.length;i++) { %>
+      <% for (var j=0;j<course.length;j++) {%>
+        <% if(choice[i].courseID == course[j].courseID) {%>
       <tr>
         <form method = "POST" action="/student/deleteCourse">
             <td><%= i+1 %></td>
             <td><input type="hidden" name="courseID" value="<%= choice[i].courseID %>"><%= choice[i].courseID %></td>
+            <td><%=course[j].name%></td>
         <!-- <td><a href = "/admin/deleteCourse"><button>Delete</button></a></td> -->
         <td><input type="submit" value="Delete"></td>
-
-        
         </form>
-        
       </tr>
+      <% } %>
+      <% } %>
       <% } %>
   </table>
   <% } %>
+</div>
+
+<div id="viewAllot" class="tabcontent">
+  <% if(result.length ==0) {%>
+      <h3>Allotment has not been performed</h3>    
+    <%} 
+      else {%>
+        <h3>You have been alloted to :</h3>    
+        <br>
+        <% for(var i=0;i<course.length;i++) {%>
+          <% if(result[0].courseID == course[i].courseID) {%>
+            <h4><%=result[0].courseID%> -- <%= course[i].name%></h4>
+            <%} %>
+          <%} %>
+    <% } %>
+        
 </div>
 
 
