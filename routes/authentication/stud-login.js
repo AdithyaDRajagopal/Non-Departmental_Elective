@@ -15,7 +15,7 @@ router.post('/',(req,res)=>{
     .then(result => {
         // console.log(result.token);
         state.token = result.token;
-        res.render('otp',{user : state.username})
+        res.render('otp',{user : state.username , msg : ""})
     })
 })
 
@@ -49,7 +49,8 @@ router.post('/confirmOtp',(req,res)=>{
         })
     }
     else {
-        console.log("Wrong OTP");
+        username = req.body.username
+        res.render('otp',{user : username , msg :"Incorrect OTP"})
     }
 })
 

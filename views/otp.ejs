@@ -51,26 +51,29 @@ $ripples.on('animationend webkitAnimationEnd mozAnimationEnd oanimationend MSAni
   <body>
         <div class="row" style="height:100vh;">
           <div class="col-lg-6 col-md-12">
-            <h3 class="heading" style="text-align:center;">Global Elective for S8</h3>
+            <h3 class="heading" style="text-align:center;">Inter Departmental Elective</h3>
             <img src="img/edubg.jpg" style="text-align: center; height:60%; margin-bottom:0px;">
            
           </div>
           <div class="col-lg-6 col-md-12">
    <form method="POST" action="/studLogin/confirmOtp">
   <div class="group">
-      <label>KTU Registration Number</label>
-      <select name="username">
-        <option value=<%=user%>><%= user %> </option>
+        <input type="hidden" id="username" name="username" value="<%=user%>"><span class="highlight"></span><span class="bar"></span> 
   </div>
+  <br><br>
   <!-- <div class="group">
       <label>Password</label>
     <input type="password" id="password" name="password"><span class="highlight"></span><span class="bar"></span> 
   </div> -->
-  <br><br>
-  <div class="group">
-      <label>Enter OTP Here</label>
-    <input type="text" id="otp" name="otp"><span class="highlight"></span><span class="bar"></span>
-  </div>
+  <!--div class="group">
+    <label>Username</label>
+  <input type="text" id="username" name="username"><span class="highlight"></span><span class="bar"></span>
+</!--div-->
+<div class="group">
+    <label>Please enter the otp that has been sent your registered mail ID</label>
+  <input type="password" id="password" name="otp"><span class="highlight"></span><span class="bar"></span> 
+  <label><%=msg%></label>
+</div>
   <!-- <div class="group">
       <label>Password</label>
     <input type="password" id="password" name="password"><span class="highlight"></span><span class="bar"></span> 

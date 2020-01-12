@@ -3,7 +3,7 @@ var app = express()
 
 var methods = require('./methods')
 
-methods.course.unfill()
-.then( re => {
-    console.log("Cleared")
+methods.result.getResults()
+.then( result => {
+    
 })

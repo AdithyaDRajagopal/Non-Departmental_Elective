@@ -84,6 +84,7 @@
         </style>
 
 <div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'Instructions')">Instructions</button>
   <button class="tablinks" onclick="openCity(event, 'selCourses')">Select Courses</button>
   <button class="tablinks" onclick="openCity(event, 'viewCourses')">View Selected Courses</button>
   <button class="tablinks" onclick="openCity(event, 'viewAllot')">View Alloted Course</button>
@@ -93,23 +94,33 @@
     <a href = '/logout-student'>Logout</a>
   </button>
 </div>
-  <div id="selCourses" class="tabcontent">
-    <h3>Select Courses</h3>
-      <form method="POST" action = '/student/selectCourse'>
-        <br>
-        <h6>Select the courses in the order of your preference</h6>
+  <div id="Instructions" class="tabcontent">
+    <h3>Instructions</h3>
+    <ol type="1">
+      <li>Please enter maximum number of choices.</li>
+      <li>A choice will be selected if you click the add choice button.</li>
+      <li>Enter the choices in the order of your preference.</li>
+      <li>A choice may be deleted from the view choices menu.</li>
+      <li>Allotment is based on the cgpa up to S6. In case of a tie, first come first serve policy will be followed.</li>
+      <li>If you fail to get any of your choice(or if you do not provide any choice), then you will be alloted any course randomly.</li>
+    </ol> 
+</div>
+
+<div id="selCourses" class="tabcontent">
+  <h3>Select Courses</h3>
+    <form method="POST" action = '/student/selectCourse'>
+      <br><br>
+      <div class="group">
+        <select name="courseID">
+            <% for(var i=0;i<data.length;i++) { %>
+          <option value=<%= data[i].courseID %>><%=data[i].courseID%> - <%= data[i].name %> </option>
+          <% } %>
+        </select>
         <br><br>
-        <div class="group">
-          <select name="courseID">
-              <% for(var i=0;i<data.length;i++) { %>
-            <option value=<%= data[i].courseID %>><%=data[i].courseID%> - <%= data[i].name %> </option>
-            <% } %>
-          </select>
-          <br><br>
-          <button type="submit"  class="button buttonBlue">Add Course
-          </button>
-        </div>
-  </form>
+        <button type="submit"  class="button buttonBlue">Add Course
+        </button>
+      </div>
+</form>
 </div>
 
 <div id="viewCourses" class="tabcontent">

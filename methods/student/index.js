@@ -183,6 +183,29 @@ studentMethods.generateRankList = function() {
     })
 }
 
+studentMethods.RemainingStudents = function(student) { 
+  return new Promise((resolve,reject) =>{
+      models.student.findAll({
+          where : {
+            id : {
+              [Op.notIn] : student
+            },
+          },
+          order : [['cgpa','DESC'],['updatedAt','ASC']]
+      })
+      .then(res => {
+          var students = []
+          res.forEach(element => {
+              students.push(element.dataValues.id)
+          });
+          resolve(students)
+      })
+      .catch(err => {
+          reject(err)
+      })
+  })
+}
+
 studentMethods.getStudentPreferences = function(studentID){
     return new Promise((resolve,reject) => {
         models.choice.findAll()
