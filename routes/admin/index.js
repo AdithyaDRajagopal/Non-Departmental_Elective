@@ -130,16 +130,17 @@ router.get("/allot",(req,response)=>{
                for(let i=0;i<course.length;i++){
                  cid.push(course[i].courseID)
                }  
-               for(let k=0;k<cid.length;k++)
-               methods.result.getResultCourse(cid[k])
-               .then(re2 => {
-                   methods.course.fill(cid[k],re2.length)
-                   .then(re => {
-                     console.log("fill");
-                     response.redirect("/admin/dashboard")
-                   })
-               })
+               for(let k=0;k<cid.length;k++){
+                methods.result.getResultCourse(cid[k])
+                .then(re2 => {
+                    methods.course.fill(cid[k],re2.length)
+                    .then(re => {
+                      console.log("fill");
+                    })
+                })
+              }
              })
+             response.redirect("/admin/dashboard")
           })
           .catch(er =>{
               console.log(er)
