@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Sequelize = require('sequelize')
 const models = require('../models');
+const methods = require('../methods')
 var { sequelize } = models;
 var auth = require('../middlewares/auth')
 var authst =require('../middlewares/authstudent')
@@ -15,15 +16,33 @@ router.get('/login', (req,res) => {
 })
 
 router.get('/registration',(req,res) => {
-   res.render('register',{title:'Register'});
+   methods.user.ifAdmin()
+   .then(result => {
+      if(!result){
+         res.render('register',{title:'Register'});
+      }
+      else{
+         res.redirect("/")
+      }
+   })
+   .catch(err=>{
+      console.log(err)
+   })
 })   
 
 router.get('/logout',(req,res)=>{
    req.session.destroy(function(){
      console.log("user logged out.")
   });
-  res.redirect('/');
+  res.redirect('/login');
  })
+
+router.get("/logout-student",(req,res) => {
+   req.session.destroy(function(){
+      console.log("user logged out.")
+   });
+   res.redirect('/');
+})
 
 router.use('/loginSubmit',require('./authentication/login'));
 router.use('/studLogin',require('./authentication/stud-login'));

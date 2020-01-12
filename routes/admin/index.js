@@ -71,7 +71,13 @@ router.post('/changePassword',(req,res,next) => {
 })
 
 router.get("/allot",(req,response)=>{
-  methods.student.generateRankList()
+  methods.result.clearResult()
+  .then( result => {
+    console.log("Result cleared")
+    methods.course.unfill()
+    .then( re=>{
+      console.log("Courses Unfilled")
+      methods.student.generateRankList()
   .then(res2 => {
       //Students Arranged in Descending Order in res
       // console.log(res2)
@@ -113,8 +119,27 @@ router.get("/allot",(req,response)=>{
              for(var z=0;z<allotment.length;z++){
               methods.result.addResult(allotment[z])
              }
-             
-             response.redirect("/admin/dashboard")
+             methods.course.getCourses()
+             .then( result => {
+               var dic = {"course":result}
+               let course = []
+               for (let i=0; i<dic["course"].length; i+=1) {
+                 course.push(dic["course"][i].dataValues);
+               }
+               let cid = []
+               for(let i=0;i<course.length;i++){
+                 cid.push(course[i].courseID)
+               }  
+               for(let k=0;k<cid.length;k++)
+               methods.result.getResultCourse(cid[k])
+               .then(re2 => {
+                   methods.course.fill(cid[k],re2.length)
+                   .then(re => {
+                     console.log("fill");
+                     response.redirect("/admin/dashboard")
+                   })
+               })
+             })
           })
           .catch(er =>{
               console.log(er)
@@ -125,6 +150,8 @@ router.get("/allot",(req,response)=>{
   })
   .catch(erro => {
       reject(erro)
+  })
+    })
   })
 })
 

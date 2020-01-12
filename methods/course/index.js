@@ -151,7 +151,6 @@ courseMethods.getCourse = function(cid){
 courseMethods.getCourses = function(){
   return new Promise((resolve,reject) => {
     models.course.findAll({
-      raw : true,
       where : {
         selected : true
       }
@@ -190,5 +189,46 @@ courseMethods.getAllCourses = function(){
   })
 }
 
+courseMethods.fill = (cid,fill) => {
+  return new Promise((resolve, reject) => {
+    models.course.findOne({
+      where : {
+        courseID : cid
+      }
+    })
+      .then((result) => {
+        result.update({
+          filled : fill,
+        })
+        .then( re => {
+          resolve(re);
+        })
+        .catch( e=>{
+          reject(e);
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
+  });
+}
 
-  module.exports = courseMethods;
+courseMethods.unfill = () => {
+  return new Promise((resolve, reject) => {
+    models.course.update({
+      filled:0
+    },{
+      where : {selected : true}
+    })
+      .then(result=> {
+        resolve(result)
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
+  });
+}
+
+module.exports = courseMethods;

@@ -183,12 +183,12 @@ authenticationMethods.authenticateStudent = function(username) {
             var transporter = nodemailer.createTransport({
               service: 'gmail',
               auth: {
-                user: 'adithyarajagopal1999@gmail.com',
-                pass: 'password'
+                user: 'globalelective1@gmail.com ',
+                pass: 'global@123'
               }
             });
             var mailOptions = {
-              from: 'adithyarajagopal1999@gmail.com',
+              from: 'globalelective1@gmail.com',
               to: emailid,
               subject: "OTP",
               // text: `Your one time password is ${otptoken}`

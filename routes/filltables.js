@@ -120,7 +120,7 @@ router.get("/",(req,res) => {
     methods.filltables.addCCE("ME484","CE466")
     methods.filltables.addCCE("EE486","EC360")
 
-    res.redirect('/')
+    res.redirect('/login')
 })
 
 module.exports = router

@@ -97,5 +97,20 @@ userMethods.changePasswordAdvisor = function(username,password)  {
   })
 }
 
+userMethods.ifAdmin = function(){
+  return new Promise((resolve,reject) => {
+    models.user.findOne({
+      where : {
+        type : 1
+      }
+    })
+    .then(res => {
+      resolve(res)
+    })
+    .catch(err => {
+      reject(err)
+    })
+  })
+}
   
   module.exports = userMethods;
