@@ -179,7 +179,7 @@ router.post("/upload",(req,res)=>{
                         let result = importExcel({
                                         sourceFile: './excel/' +filename,
                                         header : {rows:1},
-                                        columnToKey : {A:'RegID',B:'Name',C:'email',D:'cgpa',E:'Dept'},
+                                        columnToKey : {A:'RegID',B:'Name',E:'email',G:'cgpa',H:'Dept'},
                                         sheets : ['Sheet1']
                         });
                         for(var i=0;i<result.Sheet1.length;i++){
