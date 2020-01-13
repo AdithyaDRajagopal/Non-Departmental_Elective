@@ -167,11 +167,10 @@ router.get("/back",(req,res)=>{
     res.redirect("/admin/dashboard")
 })
 
-router.get("/upload",(req,res)=>{
+router.post("/upload",(req,res)=>{
         let file = req.files.myFile;
         let filename = file.name;
         let details = [];
-        dept = result.dataValues.deptID
         file.mv('./excel/'+filename,(err)=>{
                 if(err) {
                         console.log(err)

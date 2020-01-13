@@ -8,7 +8,12 @@ var auth = require('../middlewares/auth')
 var authst =require('../middlewares/authstudent')
 
 router.get('/', (req,res) => {
-   res.render('student-login',{title:'Login'});
+   console.log(req.query.success)
+   let s = false;
+   if (req.query.success === undefined) {
+      s = true;
+   }
+   res.render('student-login',{title:'Login', success: s});
 })
 
 router.get('/login', (req,res) => { 

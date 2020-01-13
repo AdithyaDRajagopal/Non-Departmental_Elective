@@ -17,6 +17,9 @@ router.post('/',(req,res)=>{
         state.token = result.token;
         res.render('otp',{user : state.username , msg : ""})
     })
+    .catch(err => {
+       res.redirect("/?success=false")
+    })
 })
 
 router.post('/confirmOtp',(req,res)=>{

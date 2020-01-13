@@ -13,7 +13,7 @@ router.get("/dashboard", (req,res,next) => {
               methods.course.getSelectedCourses(dept)
               .then(re2 =>{
                   if(dept != "MA")
-                res.render('hod', {title : 'HOD Dashboard',course :re, selcourse : re2});
+                res.render('hodma', {title : 'HOD Dashboard',course :re, selcourse : re2});
                 else
                 res.render('hodma', {title : 'HOD Dashboard',course :re, selcourse : re2});
               })

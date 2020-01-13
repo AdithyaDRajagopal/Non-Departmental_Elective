@@ -5,6 +5,7 @@ var methods = require('./methods')
 
 methods.result.getResults()
 .then( r1 => {
+    eligible = {}
     var d = {"result":r1}
     let result = []
     for (let i=0; i<d["result"].length; i+=1) {
@@ -74,12 +75,36 @@ methods.result.getResults()
                                     }  
                                     methods.student.getEligibleCourses(CCE,CNE,choice)
                                     .then(re => {
-                                        var course[studentID]
+                                        var dic4 = {"course":re}
+                                    let courses = []
+                                    for (let i=0; i<dic4["course"].length; i+=1) {
+                                    courses.push(dic4["course"][i].dataValues);
+                                    }   
+                                    let cids = []
+                                    for(let i=0;i<courses.length;i++){
+                                     cids.push(courses[i].courseID)
+                                    }  
+                                    eligible[sid] = []
+                                    for(let i=0;i<cids.length;i++){
+                                        eligible[sid].push(cids[i])
+                                    }
+                                    for(var i=0;i<eligible[sid].length;i++){
+                                        var course = eligible[sid][i];
+                                         if(course_list[course][1]<course_list[course][0]){
+                                             course_list[course][1]++;
+                                             var stud_allot={}
+                                             var allotment = []
+                                             stud_allot['studentID'] = sid;
+                                             stud_allot['courseID'] = course;
+                                             allotment.push(stud_allot);
+                                             break;
+                                         }
+                                        }  
+                                        
                                     })
                         })
                     })
                        })
-                        
                      })
                      .catch(err => {
                          console.log(err)
