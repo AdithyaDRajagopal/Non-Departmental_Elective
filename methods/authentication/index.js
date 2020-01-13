@@ -14,6 +14,7 @@ const options = {
   upperCase: false,
   specialChars: false
 }
+let state = true;
 
 authenticationMethods.registerAdmin = function(info) {
   return new Promise(function(resolve, reject) {
@@ -167,6 +168,8 @@ authenticationMethods.authenticateUser = function(username, password) {
   });
 };
 
+state = true;
+
 authenticationMethods.authenticateStudent = function(username) {
   return new Promise(function(resolve, reject) {
     models.student.findOne({
@@ -180,28 +183,49 @@ authenticationMethods.authenticateStudent = function(username) {
            console.log(result.dataValues.email);
             const otptoken = otpGenerator.generate(6, options);
              console.log(otptoken);
-            var transporter = nodemailer.createTransport({
+            var transporter1 = nodemailer.createTransport({
               service: 'gmail',
               auth: {
                 user: 'globalelective1@gmail.com ',
-                pass: 'global@123'
+                pass: 'K36fCnspsU6MRPJ'
+              }
+            });
+            var transporter2 = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: 'globalelective3@gmail.com ',
+                pass: 'K36fCnspsU6MRPJ'
               }
             });
             var mailOptions = {
-              from: 'globalelective1@gmail.com',
+              from: 'globalelective@gmail.com',
               to: emailid,
               subject: "OTP",
               // text: `Your one time password is ${otptoken}`
               html: `<p>Your One-Time Password is <b>${otptoken}</b></p>`
             }
-            transporter.sendMail(mailOptions, function(error, info){
-              if(error){
-                console.log(error);
-              }
-              else {
-                console.log('Email sent: ' + info.response);
-              }
-            })
+            // state = await setstate();
+            state = !state;
+            if(state){
+              transporter1.sendMail(mailOptions, function(error, info){
+                if(error){
+                  console.log(error);
+                }
+                else {
+                  console.log('Email sent: ' + info.response);
+                }
+              })
+            }
+            else {
+              transporter2.sendMail(mailOptions, function(error, info){
+                if(error){
+                  console.log(error);
+                }
+                else {
+                  console.log('Email sent: ' + info.response);
+                }
+              })
+            }
             resolve({
                 success: true,
                 token: otptoken,
