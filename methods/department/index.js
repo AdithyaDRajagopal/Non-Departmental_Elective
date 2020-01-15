@@ -41,6 +41,30 @@ departmentMethods.getAllDepts = () => {
   });
 };
 
+departmentMethods.getDeptsArray = () => {
+  dept = ["MA"]
+  return new Promise((resolve, reject) => {
+    models.department.findAll({
+      where : {
+        Did : {
+          [Op.notIn] : dept
+        }
+      }
+    })
+      .then((result) => {
+        var depts = []
+        result.forEach(dept => {
+          depts.push(dept.dataValues.Did)
+        })
+        resolve(depts)
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
+  });
+}
+
 departmentMethods.getReqDept = function(deptID) {
   console.log('inside get req depts');
   return new Promise((resolve, reject) => {
@@ -80,4 +104,40 @@ departmentMethods.getReqDept = function(deptID) {
     })
   }*/
   
+  departmentMethods.NotEligible = function(){
+    return new Promise((resolve,reject) => {
+        models.CNE.findAll()
+        .then(res => {
+          // console.log(res)
+          var pref = {}
+          res.forEach(element => {
+            if (!(element.dataValues.dept in pref)){
+              pref[element.dataValues.dept] = [];
+              // pref[element.dataValues.studentID].push(element.dataValues.courseID)
+              pref[element.dataValues.dept].push(element.dataValues.CID);
+            }
+            else
+            pref[element.dataValues.dept].push(element.dataValues.CID);
+          });
+          // var cids = [];
+          // res.forEach(element => {
+          //   cids[element.dataValues.preferenceLevel - 1] = element.dataValues.courseID;
+          // });
+         /* preferences = []  
+          depts.forEach(department => {
+            // preferences[student] = pref[student]
+            // console.log(student)
+            var studObj = new Object();
+            studObj[department] = pref[department]
+            preferences.push(studObj)
+            // console.log(pref[stude])
+          });*/
+          resolve(pref)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+  }
+
   module.exports = departmentMethods;

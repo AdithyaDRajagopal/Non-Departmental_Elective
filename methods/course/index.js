@@ -231,4 +231,26 @@ courseMethods.unfill = () => {
   });
 }
 
+courseMethods.RemainingCourses = (NE) => {
+  return new Promise((resolve,reject) => {
+    models.course.findAll({
+      where : {
+        courseID : {
+          [Op.notIn] : NE
+        }
+      }
+    })
+    .then(result => {
+      var eligible = []
+      result.forEach(element => {
+        eligible.push(element.dataValues.courseID)
+      })
+      resolve(eligible)
+    })
+    .catch(err => {
+      reject(err) 
+    })
+  })
+}
+
 module.exports = courseMethods;
